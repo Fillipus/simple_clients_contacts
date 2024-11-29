@@ -28,6 +28,12 @@ include 'scripts/fetchClients.php';
 
         <div class="content w-full">
             <div id="clientsContent" class="tab-content">
+                <!-- Button Row -->
+                <div class="button-container">
+                    <button id="addButton" class="button" onclick="handleButtonClick()">
+                        Add Contact
+                    </button>
+                </div>
                 <h2 class="text-xl font-semibold mb-4">Clients List</h2>
                 <table id="clientsList" class="w-full table-auto border-collapse">
                     <thead class="bg-black text-white">
@@ -91,7 +97,7 @@ include 'scripts/fetchClients.php';
                                 // Alternate row colors using Tailwind's odd and even row classes
                                 $rowClass = $index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
                                 echo "<tr class='{$rowClass}'>";
-                                
+
                                 // Display client Name
                                 echo "<td class='px-4 py-2'>" . htmlspecialchars($client['Name']) . "</td>";
 
@@ -101,7 +107,7 @@ include 'scripts/fetchClients.php';
                                 // Display client Email
                                 echo "<td class='px-4 py-2'>" . htmlspecialchars($client['Email']) . "</td>";
 
-                               
+
                                 // Display Number of Number of linked clients or "No clients"
                                 echo "<td class='px-4 py-2'>" . (empty($client['Number_of_clients']) ? 'No Linked Clients' : htmlspecialchars($client['Number_of_clients'])) . "</td>";
 

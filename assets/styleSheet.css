@@ -119,3 +119,27 @@ body {
 #contactsList th {
     text-align: left;
 }
+
+
+/* Parent container styling to align the button to the right */
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns child elements to the right */
+    margin-bottom: 16px; /* Adds space below the button row */
+    float: right;
+}
+
+/* Button Styling */
+.button {
+    background-color: #3b82f6; /* Blue background */
+    color: white; /* White text */
+    padding: 8px 16px; /* Button padding */
+    border: none; /* Removes default border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.button:hover {
+    background-color: #2563eb; /* Darker blue on hover */
+}
