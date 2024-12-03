@@ -143,3 +143,20 @@ body {
 .button:hover {
     background-color: #2563eb; /* Darker blue on hover */
 }
+
+.modal-body {
+    padding: 20px;
+}
+
+.tab-content.active {
+    display: block !important;
+}
+
+.tab-content.d-none {
+    display: none !important;
+}
+
+.btn-group-toggle .btn {
+    margin-right: 5px;
+}
+

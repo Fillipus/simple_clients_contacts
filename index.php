@@ -11,6 +11,7 @@ include 'scripts/fetchClients.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Contacts</title>
     <link rel="stylesheet" href="assets/styleSheet.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,7 +31,7 @@ include 'scripts/fetchClients.php';
             <div id="clientsContent" class="tab-content">
                 <!-- Button Row -->
                 <div class="button-container">
-                    <button id="addButton" class="button" onclick="handleButtonClick()">
+                    <button id="addButton" class="button" data-toggle="modal" data-target="#clientModal">
                         Add Contact
                     </button>
                 </div>
@@ -38,11 +39,9 @@ include 'scripts/fetchClients.php';
                 <table id="clientsList" class="w-full table-auto border-collapse">
                     <thead class="bg-black text-white">
                         <tr>
-
                             <th class="px-4 py-2">Name</th>
                             <th class="px-4 py-2">Code</th>
                             <th class="px-4 py-2">Number of Contacts</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -61,18 +60,19 @@ include 'scripts/fetchClients.php';
                                 // Display client Code or "No code"
                                 echo "<td class='px-4 py-2'>" . (empty($client['Client_code']) ? 'No code' : htmlspecialchars($client['Client_code'])) . "</td>";
 
-                                // Display Number of Contacts or "No contacts"
+                                // Display Number of Contacts or "No Linked Contacts"
                                 echo "<td class='px-4 py-2'>" . (empty($client['Number_of_contacts']) ? 'No Linked Contacts' : htmlspecialchars($client['Number_of_contacts'])) . "</td>";
 
                                 echo "</tr>";
                             }
                         } else {
                             // If no clients are available
-                            echo "<tr><td colspan='5' class='text-center px-4 py-2'>No Clients Available.</td></tr>";
+                            echo "<tr><td colspan='3' class='text-center px-4 py-2'>No Clients Available.</td></tr>";
                         }
                         ?>
                     </tbody>
                 </table>
+
             </div>
 
             <div id="contactsContent" class="tab-content" style="display:none;">
@@ -80,12 +80,10 @@ include 'scripts/fetchClients.php';
                 <table id="contactsList" class="w-full table-auto border-collapse">
                     <thead class="bg-black text-white">
                         <tr>
-
                             <th class="px-4 py-2">Name</th>
                             <th class="px-4 py-2">Surname</th>
                             <th class="px-4 py-2">Email</th>
                             <th class="px-4 py-2">Number of Clients</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -99,17 +97,16 @@ include 'scripts/fetchClients.php';
                                 echo "<tr class='{$rowClass}'>";
 
                                 // Display client Name
-                                echo "<td class='px-4 py-2'>" . htmlspecialchars($client['Name']) . "</td>";
+                                echo "<td class='px-4 py-2'>" . htmlspecialchars($contact['Name']) . "</td>";
 
                                 // Display client Surname
-                                echo "<td class='px-4 py-2'>" . htmlspecialchars($client['Surname']) . "</td>";
+                                echo "<td class='px-4 py-2'>" . htmlspecialchars($contact['Surname']) . "</td>";
 
                                 // Display client Email
-                                echo "<td class='px-4 py-2'>" . htmlspecialchars($client['Email']) . "</td>";
+                                echo "<td class='px-4 py-2'>" . htmlspecialchars($contact['Email']) . "</td>";
 
-
-                                // Display Number of Number of linked clients or "No clients"
-                                echo "<td class='px-4 py-2'>" . (empty($client['Number_of_clients']) ? 'No Linked Clients' : htmlspecialchars($client['Number_of_clients'])) . "</td>";
+                                // Display Number of Linked Clients or "No clients"
+                                echo "<td class='px-4 py-2'>" . (empty($contact['Number_of_clients']) ? 'No Linked Clients' : htmlspecialchars($contact['Number_of_clients'])) . "</td>";
 
                                 echo "</tr>";
                             }
@@ -125,8 +122,17 @@ include 'scripts/fetchClients.php';
 
     </div>
 
+    <?php include 'view/clientModal.php'; ?>
+
     <!-- Importing script.js -->
     <script src="js/script.js"></script>
+
+    <script src="js/createClient.js"></script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

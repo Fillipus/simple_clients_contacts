@@ -24,46 +24,49 @@ class Client extends Person
     {
         return $this->total_contacts;
     }
-      public function getClientCode()
-      {
-          return $this->client_code;
-      }
+    public function getClientCode()
+    {
+        return $this->client_code;
+    }
 
     //save client data (including code generation)
-    public function save(PDO  $conn)
+    // Save client data (including code generation)
+    public function save(PDO $conn)
     {
         try {
-
-            $stmt =  $conn->prepare("INSERT INTO clients (name, total_contacts) VALUES (?, ?)");
+            // Insert the client data
+            $stmt = $conn->prepare("INSERT INTO Clients (Name, Number_of_contacts) VALUES (?, ?)");
             // total_contacts is 0 if null
             $stmt->execute([$this->getName(), $this->total_contacts ?? 0]);
 
-            // Retrieve newly inserted client ID
-            $clientId =  $conn->lastInsertId();
+            // Retrieve the newly inserted client ID
+            $clientId = $conn->lastInsertId();
 
             // Generate the client code 
-            $this->client_code = $this->generateClientCode( $conn, $clientId);
+            $this->client_code = $this->generateClientCode($conn, $clientId);
 
             // Update the client record with the generated client code
-            $updateStmt =  $conn->prepare("UPDATE clients SET client_code = ? WHERE id = ?");
+            $updateStmt = $conn->prepare("UPDATE Clients SET client_code = ? WHERE Client_id = ?");
             $updateStmt->execute([$this->client_code, $clientId]);
 
+            // Return the clientId to be used in the response
+            return $clientId;  // Return the clientId after saving
         } catch (PDOException $e) {
             // Handle database-related errors
             echo "Error saving client: " . $e->getMessage();
+            return null;  // Return null or handle error as needed
         }
     }
-
-    function generateClientCode(PDO  $conn, int $lastClientId): string
+    function generateClientCode(PDO $conn, int $lastClientId): string
     {
         //fetch the client name using the provided last inserted client ID
-        $stmt =  $conn->prepare("SELECT Name FROM Clients WHERE id = ?");
+        $stmt = $conn->prepare("SELECT Name FROM Clients WHERE Client_id = ?");
         $stmt->execute([$lastClientId]);
         $clientName = $stmt->fetchColumn();
 
         // Check if the client name exists
         if (!$clientName) {
-            throw new Exception("No Client name found for this id" + $lastClientId);
+            throw new Exception("No Client name found for this Client_id" + $lastClientId);
         }
 
         // Extract the first three characters of the client's name, converted to uppercase
@@ -73,9 +76,9 @@ class Client extends Person
         $prefix = str_pad($prefix, 3, 'A');
 
         // Query the database for the maximum numeric suffix for the prefix
-        $stmt =  $conn->prepare("SELECT MAX(SUBSTRING(client_code, 4)) AS max_suffix 
-                               FROM clients 
-                               WHERE client_code LIKE ?");
+        $stmt = $conn->prepare("SELECT MAX(SUBSTRING(Client_code, 4)) AS max_suffix 
+                               FROM Clients 
+                               WHERE Client_code LIKE ?");
         $stmt->execute([$prefix . '%']);
         $maxSuffix = $stmt->fetchColumn();
 

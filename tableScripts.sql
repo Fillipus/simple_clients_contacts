@@ -8,6 +8,17 @@ CREATE TABLE `Clients` (
   `Contact_id` int(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--add auto client id incremend
+ALTER TABLE Clients 
+MODIFY COLUMN Client_id INT(255) NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
+--id incremend test 
+INSERT INTO Clients (Name, Client_code, Number_of_contacts, Contact_id)
+VALUES ('Test Client', '123456', 10, 1);
+
+
+
+
 
 CREATE TABLE `Contacts` (
   `Contact_id` int(255) NOT NULL,
