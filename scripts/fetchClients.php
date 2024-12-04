@@ -2,7 +2,7 @@
 // Include the database connection
 include('/opt/lampp/htdocs/clients_contacts/dbConnection/conn.php');
 
-// Initialize the clients array
+// initial empty clients
 $clients = [];
 
 try {

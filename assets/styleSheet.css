@@ -160,3 +160,53 @@ body {
     margin-right: 5px;
 }
 
+
+/* Basic notification container styles */
+.notification {
+    position: fixed; /* Make the notification fixed on the screen */
+    top: 20px; /* Space from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Align the notification to the center */
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white; /* Text color */
+    z-index: 9999; /* Make sure the notification is on top */
+    opacity: 0; /* Start with 0 opacity for animation */
+    animation: slideIn 0.5s ease-in-out, fadeOut 3s 2.5s forwards; /* Animation for sliding and fading */
+  }
+  
+  /* Success notification */
+  .notification.success {
+    background-color: #4CAF50; /* Green for success */
+  }
+  
+  /* Error notification */
+  .notification.error {
+    background-color: #f44336; /* Red for error */
+  }
+  
+  /* Animation for sliding from the top */
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      top: -50px; /* Start off-screen */
+    }
+    100% {
+      opacity: 1;
+      top: 20px; /* Final position */
+    }
+  }
+  
+  /* Animation for fading out after a while */
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      top: -50px; /* Slide back off-screen */
+    }
+  }
+  
+

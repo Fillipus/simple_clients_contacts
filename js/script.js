@@ -48,9 +48,6 @@ async function fetchClients() {
   try {
     const response = await fetch("scripts/fetchClients.php");
     const clients = await response.json();
-
-    console.log("clients****", clients);
-
     if (clients.error) {
       console.error("Error fetching Clients", clients.error);
       return;

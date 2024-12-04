@@ -1,15 +1,20 @@
-// Handle client form submission
+let isSubmitting = false;
 async function handleClientFormSubmit(event) {
-  event.preventDefault(); // Prevent default form submission
+  event.preventDefault();
+
+  if (isSubmitting) {
+    return;
+  }
+
+  isSubmitting = true;
 
   const clientName = document.getElementById("clientName")?.value;
 
   if (!clientName) {
     alert("Please enter a client name.");
+    isSubmitting = false;
     return;
   }
-
-  console.log("Saving client:", clientName);
 
   try {
     const response = await fetch("scripts/saveClient.php", {
@@ -19,19 +24,32 @@ async function handleClientFormSubmit(event) {
     });
 
     const data = await response.json();
-    console.log("Save client response:", data);
-
     if (data.success) {
-      alert("Client created successfully!");
-      lastCreatedClientId = data.clientId; // Store the client ID for linking
-      console.log("New client ID:", lastCreatedClientId);
-      switchTab("linking"); // Switch to linking tab
+      lastCreatedClientId = data.clientId;
+      switchTab("linking");
+      showNotification("Client created successfully!", "success");
     } else {
       alert("Error creating client: " + data.message);
     }
   } catch (error) {
     alert("An error occurred while saving the client: " + error.message);
+  } finally {
+    isSubmitting = false;
   }
+}
+
+// Function to display notifications
+function showNotification(message, type) {
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  notification.innerText = message;
+
+  document.body.appendChild(notification);
+
+  // Remove notification after the fade-out animation
+  setTimeout(() => {
+    notification.remove();
+  }, 4000);
 }
 
 document

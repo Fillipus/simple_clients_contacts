@@ -1,29 +1,40 @@
 <?php
 include('../dbConnection/conn.php');
 include('../classes/clients.php');
-
-$data = json_decode(file_get_contents("php://input"), true);
+include('../classes/contacts.php');
+error_log(json_encode($data));
 
 // Decode the incoming JSON data
 $data = json_decode(file_get_contents("php://input"), true);
-$clientId = $data['Client_id'];
-
-if (!$clientId) {
-    echo json_encode(['success' => false, 'message' => 'Client ID not found']);
-    exit;
-}
 
 $contactName = $data['contactName'];
 $contactSurname = $data['contactSurname'];
 $contactEmail = $data['contactEmail'];
 
-if (!$contactName || !$contactSurname || !$contactEmail ) {
+if (!$contactName || !$contactSurname || !$contactEmail) {
     echo json_encode(['success' => false, 'message' => 'All fields are required']);
     exit;
 }
 
-$stmt = $conn->prepare("INSERT INTO Contacts (Name, Surname, Email, Client_id) VALUES (?, ?, ?, ?)");
-$stmt->execute([$contactName, $contactSurname, $contactEmail, $clientId]);
+try {
+    // Step 1: Retrieve the last inserted Client ID from Clients Class
+    $clientId = Client::getLastInsertedClientId($conn);
+
+    //check if client id was fetched successfully in Client Class
+    if (!$clientId) {
+        throw new Exception("No client found to link the contact.");
+    }
+
+    // Step 2: Save the contact for the retrieved client ID
+    $contact = new Contact($contactName, $contactSurname, $contactEmail, null, $clientId);
+    $contact->save($conn);
+
+    // Respond with success
+    echo json_encode(['success' => true, 'clientId' => $clientId]);
+} catch (Exception $e) {
+    //error handling
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+}
 
 echo json_encode(['success' => true]);
 ?>
