@@ -1,6 +1,8 @@
 <?php
-// Include the PHP script for fetching clients
+// fetching clients
 include 'scripts/fetchClients.php';
+// fetching contacts
+include 'scripts/fetchContacts.php';
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +34,7 @@ include 'scripts/fetchClients.php';
                 <!-- Button Row -->
                 <div class="button-container">
                     <button id="addButton" class="button" data-toggle="modal" data-target="#clientModal">
-                        Add Contact
+                        Add Client
                     </button>
                 </div>
                 <h2 class="text-xl font-semibold mb-4">Clients List</h2>
@@ -76,6 +78,12 @@ include 'scripts/fetchClients.php';
             </div>
 
             <div id="contactsContent" class="tab-content" style="display:none;">
+                <!-- Button Row -->
+                <div class="button-container">
+                    <button id="addButton" class="button" data-toggle="modal" data-target="#contactModal">
+                        Add Contact
+                    </button>
+                </div>
                 <h2 class="text-xl font-semibold mb-4">Contacts List</h2>
                 <table id="contactsList" class="w-full table-auto border-collapse">
                     <thead class="bg-black text-white">
@@ -90,7 +98,7 @@ include 'scripts/fetchClients.php';
                         <?php
                         // Check if contacts are available
                         if (isset($contacts) && !empty($contacts)) {
-                            // Loop through clients and display their details
+                            // Loop through contacts and display their details
                             foreach ($contacts as $index => $contact) {
                                 // Alternate row colors using Tailwind's odd and even row classes
                                 $rowClass = $index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
@@ -122,7 +130,8 @@ include 'scripts/fetchClients.php';
 
     </div>
 
-    <?php include 'view/clientModal.php'; ?>
+    <?php include 'view/clientModal.php'; ?> 
+    <?php include 'view/contactModal.php'; ?> 
 
     <!-- Importing script.js -->
     <script src="js/script.js"></script>

@@ -29,7 +29,6 @@ class Client extends Person
         return $this->client_code;
     }
 
-    //save client data (including code generation)
     // Save client data (including code generation)
     public function save(PDO $conn)
     {
@@ -91,6 +90,26 @@ class Client extends Person
         // Combine the prefix and numeric part to form the client code
         return $prefix . $numericPart;
     }
+
+    //fetching the id of the last created clients for use when linking
+    public static function getLastInsertedClientId(PDO $conn): ?int
+    {
+        try {
+            // SQL squery
+            $stmt = $conn->query("SELECT Client_id FROM Clients ORDER BY Client_id DESC LIMIT 1");
+
+            // Fetch the result and return the Client_id
+            $lastClientId = $stmt->fetchColumn();
+
+            // If no client is found, return null
+            return $lastClientId ? (int) $lastClientId : null;
+        } catch (PDOException $e) {
+            // error handling
+            error_log("Error fetching last inserted client ID: " . $e->getMessage());
+            return null;
+        }
+    }
+
 
 }
 ?>

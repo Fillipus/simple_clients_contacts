@@ -29,6 +29,10 @@ CREATE TABLE `Contacts` (
   `Client_id` int(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--add auto contact id incremend
+ALTER TABLE Contacts
+MODIFY COLUMN Contact_id INT(255) NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
 
 -- DUMMY DATA
 INSERT INTO `Clients` (`Client_id`, `Name`, `Client_code`, `Number_of_contacts`, `Contact_id`)
