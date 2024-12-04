@@ -3,6 +3,10 @@
 include 'scripts/fetchClients.php';
 // fetching contacts
 include 'scripts/fetchContacts.php';
+//contact count script
+include 'scripts/getContactCount.php';
+//contact count script
+include 'scripts/getClientCount.php';
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +54,10 @@ include 'scripts/fetchContacts.php';
                         <?php
                         // Check if clients are available
                         if (isset($clients) && !empty($clients)) {
-                            // Loop through clients and display their details
                             foreach ($clients as $index => $client) {
+                                // contact count using the helper function
+                                $contactCount = getContactCount($conn, $client['Client_id']);
+
                                 // Alternate row colors using Tailwind's odd and even row classes
                                 $rowClass = $index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
                                 echo "<tr class='{$rowClass}'>";
@@ -62,13 +68,12 @@ include 'scripts/fetchContacts.php';
                                 // Display client Code or "No code"
                                 echo "<td class='px-4 py-2'>" . (empty($client['Client_code']) ? 'No code' : htmlspecialchars($client['Client_code'])) . "</td>";
 
-                                // Display Number of Contacts or "No Linked Contacts"
-                                echo "<td class='px-4 py-2'>" . (empty($client['Number_of_contacts']) ? 'No Linked Contacts' : htmlspecialchars($client['Number_of_contacts'])) . "</td>";
+                                // Display Number of Contacts or 0 if no contacts found
+                                echo "<td class='px-4 py-2'>" . ($contactCount > 0 ? htmlspecialchars($contactCount) : '0') . "</td>";
 
                                 echo "</tr>";
                             }
                         } else {
-                            // If no clients are available
                             echo "<tr><td colspan='3' class='text-center px-4 py-2'>No Clients Available.</td></tr>";
                         }
                         ?>
@@ -100,6 +105,9 @@ include 'scripts/fetchContacts.php';
                         if (isset($contacts) && !empty($contacts)) {
                             // Loop through contacts and display their details
                             foreach ($contacts as $index => $contact) {
+                                // client count using the helper function
+                                $clientCount = getClientCount($conn, $contact['Contact_id']);
+
                                 // Alternate row colors using Tailwind's odd and even row classes
                                 $rowClass = $index % 2 === 0 ? 'bg-gray-100' : 'bg-white';
                                 echo "<tr class='{$rowClass}'>";
@@ -113,8 +121,8 @@ include 'scripts/fetchContacts.php';
                                 // Display client Email
                                 echo "<td class='px-4 py-2'>" . htmlspecialchars($contact['Email']) . "</td>";
 
-                                // Display Number of Linked Clients or "No clients"
-                                echo "<td class='px-4 py-2'>" . (empty($contact['Number_of_clients']) ? 'No Linked Clients' : htmlspecialchars($contact['Number_of_clients'])) . "</td>";
+                                // Display Number of Contacts or 0 if no contacts found
+                                echo "<td class='px-4 py-2'>" . ($clientCount > 0 ? htmlspecialchars($clientCount) : '0') . "</td>";
 
                                 echo "</tr>";
                             }
@@ -130,13 +138,15 @@ include 'scripts/fetchContacts.php';
 
     </div>
 
-    <?php include 'view/clientModal.php'; ?> 
-    <?php include 'view/contactModal.php'; ?> 
+    <?php include 'view/clientModal.php'; ?>
+    <?php include 'view/contactModal.php'; ?>
 
     <!-- Importing script.js -->
     <script src="js/script.js"></script>
-
+    <!-- Importing createClient.js -->
     <script src="js/createClient.js"></script>
+    <!-- Importing createContact.js -->
+    <script src="js/createContact.js"></script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
