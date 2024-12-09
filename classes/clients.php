@@ -42,7 +42,7 @@ class Client extends Person
             $clientId = $conn->lastInsertId();
 
             // Generate the client code 
-            $this->client_code = $this->generateClientCode($conn, $clientId);
+            $this->client_code = $this->generateClientCode($conn, lastClientId: $clientId);
 
             // Update the client record with the generated client code
             $updateStmt = $conn->prepare("UPDATE Clients SET client_code = ? WHERE Client_id = ?");

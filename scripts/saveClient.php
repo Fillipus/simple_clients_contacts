@@ -15,7 +15,7 @@ if (!$clientName) {
 
 try {
     // Create a new Client object
-    $client = new Client($clientName, 0);
+    $client = new Client($clientName, total_contacts: 0);
 
     // Save the client and get the clientId
     $clientId = $client->save($conn); // Now it returns the clientId

@@ -26,7 +26,7 @@ try {
     }
 
     // Step 2: Save the contact for the retrieved client ID
-    $contact = new Contact($contactName, $contactSurname, $contactEmail, null, $clientId);
+    $contact = new Contact($contactName, $contactSurname, $contactEmail, null, clientId: $clientId);
     $contact->save($conn);
 
     // Respond with success
@@ -38,3 +38,6 @@ try {
 
 echo json_encode(['success' => true]);
 ?>
+
+
+
