@@ -15,16 +15,17 @@ if (!$clientName) {
 
 try {
     // Create a new Client object
-    $client = new Client($clientName, total_contacts: 0);
+    $client = new Client($clientName);
 
     // Save the client and get the clientId
-    $clientId = $client->save($conn); // Now it returns the clientId
+    // Now it returns the clientId
+    $clientId = $client->save($conn); 
 
     if ($clientId) {
-        // If client was saved, return success with clientId
+        // saved client id 
         echo json_encode(['success' => true, 'clientId' => $clientId]);
     } else {
-        // If there was an error, return failure
+        // error handling
         echo json_encode(['success' => false, 'message' => 'Error saving client']);
     }
 } catch (Exception $e) {

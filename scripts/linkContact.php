@@ -2,42 +2,45 @@
 include('../dbConnection/conn.php');
 include('../classes/clients.php');
 include('../classes/contacts.php');
-error_log(json_encode($data));
 
 // Decode the incoming JSON data
 $data = json_decode(file_get_contents("php://input"), true);
 
-$contactName = $data['contactName'];
-$contactSurname = $data['contactSurname'];
-$contactEmail = $data['contactEmail'];
-
-if (!$contactName || !$contactSurname || !$contactEmail) {
-    echo json_encode(['success' => false, 'message' => 'All fields are required']);
-    exit;
-}
-
 try {
-    // Step 1: Retrieve the last inserted Client ID from Clients Class
-    $clientId = Client::getLastInsertedClientId($conn);
+    // Validate input
+    if (empty($data['contactName']) || empty($data['contactSurname']) || empty($data['contactEmail'])) {
+        throw new Exception("All contact fields are required.");
+    }
 
-    //check if client id was fetched successfully in Client Class
+    $conn->beginTransaction();
+
+    // Step 1: Retrieve the last inserted Client ID
+    $clientId = Client::getLastInsertedClientId($conn);
     if (!$clientId) {
         throw new Exception("No client found to link the contact.");
     }
 
-    // Step 2: Save the contact for the retrieved client ID
-    $contact = new Contact($contactName, $contactSurname, $contactEmail, null, clientId: $clientId);
-    $contact->save($conn);
+    // Step 2: Save the contact
+    $contact = new Contact(
+        $data['contactName'],
+        $data['contactSurname'],
+        $data['contactEmail']
+    );
+    $contactId = $contact->save($conn);
 
-    // Respond with success
+    if (!$contactId) {
+        throw new Exception("Failed to save contact.");
+    }
+
+    // Step 3: Link contact to client
+    $contact->linkContactToClient($conn, $clientId, $contactId);
+
+    $conn->commit(); // Commit transaction
+
     echo json_encode(['success' => true, 'clientId' => $clientId]);
 } catch (Exception $e) {
-    //error handling
+    $conn->rollBack(); // Rollback on error
+    error_log("Error in linkContact.php: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
-
-echo json_encode(['success' => true]);
 ?>
-
-
-

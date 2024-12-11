@@ -1,6 +1,7 @@
 <?php
 include('../dbConnection/conn.php');
 include('../classes/contacts.php');
+include('../classes/clients.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -16,19 +17,31 @@ if (!$contactName || !$contactSurname || !$contactEmail) {
 }
 
 try {
+
+    $lastClientId = Client::getLastInsertedClientId($conn);
+
+    error_log("Last inserted Client ID: " . $lastClientId);
+
+    
+    if (!$lastClientId) {
+        throw new Exception("No client exists to link the contact.");
+    }
+
     // Create a new Contact Class object
-    $contact = new Contact($contactName, $contactSurname, $contactEmail, $numberOfClients, $clientId);
+    $contact = new Contact($contactName, $contactSurname, $contactEmail);
 
     // Save the contact
-    $savedContact = $contact->save($conn);
+    $savedContactId = $contact->save($conn);
 
-    if ($savedContact) {
-        // contact saved
-        echo json_encode(['success' => true, 'message' => 'Contact saved successfully']);
+    if ($savedContactId) {
+        // Link the contact to the client in the ClientContacts table
+        $contact->linkContactToClient($conn, $lastClientId, $savedContactId);
+
+        echo json_encode(['success' => true, 'message' => 'Contact saved and linked successfully']);
     } else {
-        // If there was an error, return failure
         echo json_encode(['success' => false, 'message' => 'Error saving Contact']);
     }
+
 } catch (Exception $e) {
     error_log("Exception: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'An unexpected error occurred in saving Contact']);
