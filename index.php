@@ -73,7 +73,7 @@ include 'scripts/getClientCount.php';
                                 echo "<td class='px-4 py-2'>" . ($contactCount > 0 ? htmlspecialchars($contactCount) : '0') . "</td>";
 
                                 //unlink contacts
-                                echo "<td class='px-4 py-2'> <a href='#' class='text-blue-500 unlink-button' data-client-id='" . $client['Client_id'] . "'>Unlink</a> </td>";
+                                echo "<td class='px-4 py-2'><a href='#' class='unlink-button' data-client-id='" . htmlspecialchars($client['Client_id']) . "'>Unlink</a></td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -150,6 +150,8 @@ include 'scripts/getClientCount.php';
     <script src="js/createClient.js"></script>
     <!-- Importing createContact.js -->
     <script src="js/createContact.js"></script>
+    <!-- Importing unlinkContact.js -->
+    <script src="js/unlinkContact.js"></script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
