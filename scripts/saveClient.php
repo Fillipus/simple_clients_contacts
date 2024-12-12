@@ -1,8 +1,6 @@
 <?php
 include('../dbConnection/conn.php');
 include('../classes/clients.php');
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 // Decode the incoming JSON data
 $data = json_decode(file_get_contents("php://input"), true);
@@ -15,16 +13,17 @@ if (!$clientName) {
 
 try {
     // Create a new Client object
-    $client = new Client($clientName, 0);
+    $client = new Client($clientName);
 
     // Save the client and get the clientId
-    $clientId = $client->save($conn); // Now it returns the clientId
+    // Now it returns the clientId
+    $clientId = $client->save($conn); 
 
     if ($clientId) {
-        // If client was saved, return success with clientId
+        // saved client id 
         echo json_encode(['success' => true, 'clientId' => $clientId]);
     } else {
-        // If there was an error, return failure
+        // error handling
         echo json_encode(['success' => false, 'message' => 'Error saving client']);
     }
 } catch (Exception $e) {

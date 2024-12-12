@@ -7,6 +7,7 @@ include 'scripts/fetchContacts.php';
 include 'scripts/getContactCount.php';
 //contact count script
 include 'scripts/getClientCount.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +49,7 @@ include 'scripts/getClientCount.php';
                             <th class="px-4 py-2">Name</th>
                             <th class="px-4 py-2">Code</th>
                             <th class="px-4 py-2">Number of Contacts</th>
+                            <th class="px-4 py-2">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,6 +73,8 @@ include 'scripts/getClientCount.php';
                                 // Display Number of Contacts or 0 if no contacts found
                                 echo "<td class='px-4 py-2'>" . ($contactCount > 0 ? htmlspecialchars($contactCount) : '0') . "</td>";
 
+                                //unlink contacts
+                                echo "<td class='px-4 py-2'><a href='#' class='unlink-button' data-client-id='" . htmlspecialchars($client['Client_id']) . "'>Unlink</a></td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -85,9 +89,9 @@ include 'scripts/getClientCount.php';
             <div id="contactsContent" class="tab-content" style="display:none;">
                 <!-- Button Row -->
                 <div class="button-container">
-                    <button id="addButton" class="button" data-toggle="modal" data-target="#contactModal">
+                    <!-- <button id="addButton" class="button" data-toggle="modal" data-target="#contactModal">
                         Add Contact
-                    </button>
+                    </button> -->
                 </div>
                 <h2 class="text-xl font-semibold mb-4">Contacts List</h2>
                 <table id="contactsList" class="w-full table-auto border-collapse">
@@ -147,6 +151,8 @@ include 'scripts/getClientCount.php';
     <script src="js/createClient.js"></script>
     <!-- Importing createContact.js -->
     <script src="js/createContact.js"></script>
+    <!-- Importing unlinkContact.js -->
+    <script src="js/unlinkContact.js"></script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
