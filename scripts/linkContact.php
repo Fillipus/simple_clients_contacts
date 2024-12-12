@@ -1,4 +1,5 @@
 <?php
+// database connection
 include('../dbConnection/conn.php');
 include('../classes/clients.php');
 include('../classes/contacts.php');
@@ -26,6 +27,7 @@ try {
         $data['contactSurname'],
         $data['contactEmail']
     );
+    
     $contactId = $contact->save($conn);
 
     if (!$contactId) {
@@ -35,11 +37,11 @@ try {
     // Step 3: Link contact to client
     $contact->linkContactToClient($conn, $clientId, $contactId);
 
-    $conn->commit(); // Commit transaction
+    $conn->commit(); 
 
     echo json_encode(['success' => true, 'clientId' => $clientId]);
 } catch (Exception $e) {
-    $conn->rollBack(); // Rollback on error
+    $conn->rollBack(); 
     error_log("Error in linkContact.php: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }

@@ -50,15 +50,15 @@ body {
 }
 
 #clientsList {
-    width: 100%; /* Ensure table takes full width */
-    border-spacing: 0; /* Ensure table rows don't have extra spacing */
-    border-collapse: collapse; /* Collapse borders between table cells */
+    width: 100%; 
+    border-spacing: 0; 
+    border-collapse: collapse; 
 }
 
 #contactsList {
-    width: 100%; /* Ensure table takes full width */
-    border-spacing: 0; /* Ensure table rows don't have extra spacing */
-    border-collapse: collapse; /* Collapse borders between table cells */
+    width: 100%; 
+    border-spacing: 0; 
+    border-collapse: collapse; 
 }
 
 #clientsList th,
@@ -83,25 +83,25 @@ body {
 }
 
 #clientsList tr:nth-child(even) {
-    background-color: #f4f4f4; /* Light gray for even rows */
+    background-color: #f4f4f4; 
 }
 
 #contactsList tr:nth-child(even) {
-    background-color: #f4f4f4; /* Light gray for even rows */
+    background-color: #f4f4f4; 
 }
 
 #clientsList tr:nth-child(odd) {
-    background-color: #fff; /* White for odd rows */
+    background-color: #fff;
 }
 #contactsList tr:nth-child(odd) {
-    background-color: #fff; /* White for odd rows */
+    background-color: #fff;
 }
 
 #clientsList tr:hover {
-    background-color: #bdc3c7; /* Darken background on hover */
+    background-color: #bdc3c7; 
 }
 #contactsList tr:hover {
-    background-color: #bdc3c7; /* Darken background on hover */
+    background-color: #bdc3c7; 
 }
 
 #clientsList td {
@@ -121,27 +121,25 @@ body {
 }
 
 
-/* Parent container styling to align the button to the right */
 .button-container {
     display: flex;
-    justify-content: flex-end; /* Aligns child elements to the right */
-    margin-bottom: 16px; /* Adds space below the button row */
+    justify-content: flex-end; 
+    margin-bottom: 16px; 
     float: right;
 }
 
-/* Button Styling */
 .button {
-    background-color: #3b82f6; /* Blue background */
-    color: white; /* White text */
-    padding: 8px 16px; /* Button padding */
-    border: none; /* Removes default border */
-    border-radius: 8px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
+    background-color: #3b82f6; 
+    color: white; 
+    padding: 8px 16px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
 }
 
 .button:hover {
-    background-color: #2563eb; /* Darker blue on hover */
+    background-color: #2563eb; 
 }
 
 .modal-body {
@@ -161,51 +159,46 @@ body {
 }
 
 
-/* Basic notification container styles */
 .notification {
-    position: fixed; /* Make the notification fixed on the screen */
-    top: 20px; /* Space from the top */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Align the notification to the center */
+    position: fixed; 
+    top: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
     padding: 15px 25px;
     border-radius: 5px;
     font-size: 16px;
-    color: white; /* Text color */
-    z-index: 9999; /* Make sure the notification is on top */
-    opacity: 0; /* Start with 0 opacity for animation */
-    animation: slideIn 0.5s ease-in-out, fadeOut 3s 2.5s forwards; /* Animation for sliding and fading */
+    color: white; 
+    z-index: 9999; 
+    opacity: 0; 
+    animation: slideIn 0.5s ease-in-out, fadeOut 3s 2.5s forwards; 
   }
   
-  /* Success notification */
   .notification.success {
-    background-color: #4CAF50; /* Green for success */
+    background-color: #4CAF50;
   }
   
-  /* Error notification */
   .notification.error {
-    background-color: #f44336; /* Red for error */
+    background-color: #f44336; 
   }
   
-  /* Animation for sliding from the top */
   @keyframes slideIn {
     0% {
       opacity: 0;
-      top: -50px; /* Start off-screen */
+      top: -50px; 
     }
     100% {
       opacity: 1;
-      top: 20px; /* Final position */
+      top: 20px; 
     }
   }
   
-  /* Animation for fading out after a while */
   @keyframes fadeOut {
     0% {
       opacity: 1;
     }
     100% {
       opacity: 0;
-      top: -50px; /* Slide back off-screen */
+      top: -50px; 
     }
   }
   

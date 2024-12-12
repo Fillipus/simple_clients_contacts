@@ -10,7 +10,7 @@ if (!$clientId) {
 }
 
 try {
-    // Start a transaction to ensure data consistency
+    
     $conn->beginTransaction();
 
     // Find the Contact IDs associated with the client in the ClientContacts table

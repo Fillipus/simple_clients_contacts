@@ -1,18 +1,18 @@
 <?php
-// Include the database connection
-include('/opt/lampp/htdocs/clients_contacts/dbConnection/conn.php');
+// database connection
+include('dbConnection/conn.php');
 
 // initial empty contacts
 $contacts = [];
 
 try {
     if ($conn) {
-        // Query to fetch all contacts from the database
+        // fetch query
         $stmt = $conn->query("SELECT * FROM Contacts");
         $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 } catch (PDOException $e) {
-    // Handle any errors during the fetching process
+    // error handling
     echo "Database error: " . $e->getMessage();
 }
 ?>

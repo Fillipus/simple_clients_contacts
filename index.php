@@ -7,6 +7,7 @@ include 'scripts/fetchContacts.php';
 include 'scripts/getContactCount.php';
 //contact count script
 include 'scripts/getClientCount.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -88,9 +89,9 @@ include 'scripts/getClientCount.php';
             <div id="contactsContent" class="tab-content" style="display:none;">
                 <!-- Button Row -->
                 <div class="button-container">
-                    <button id="addButton" class="button" data-toggle="modal" data-target="#contactModal">
+                    <!-- <button id="addButton" class="button" data-toggle="modal" data-target="#contactModal">
                         Add Contact
-                    </button>
+                    </button> -->
                 </div>
                 <h2 class="text-xl font-semibold mb-4">Contacts List</h2>
                 <table id="contactsList" class="w-full table-auto border-collapse">

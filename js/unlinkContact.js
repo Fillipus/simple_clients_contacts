@@ -3,9 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      // Get the clientId from the correct attribute
+      // Getting the clientId
       const clientId = button.getAttribute("data-client-id");
-      console.log("Client ID:********", clientId);
 
       if (!clientId) {
         alert("Client ID is missing.");
@@ -23,11 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
           const data = await response.json();
-          console.log("data :********", data);
 
           if (data.success) {
             alert("Contacts unlinked successfully!");
-            // Refresh the page to update the contact count
+            // Refresh the page
             location.reload();
           } else {
             alert("Error unlinking contacts: " + data.message);
